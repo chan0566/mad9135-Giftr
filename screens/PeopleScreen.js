@@ -5,6 +5,7 @@ import { useContext } from "react";
 import PeopleContext from "../PeopleContext";
 import { GestureHandlerRootView, Swipeable,} from "react-native-gesture-handler";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { MaterialCommunityIcons } from 'react-native-vector-icons';
 
 export default function PeopleScreen() {
   const navigation = useNavigation();
@@ -23,8 +24,19 @@ export default function PeopleScreen() {
   const renderItem = ({ item }) => (
     <Swipeable renderRightActions={() => renderRightActions(item.id)}>
       <View style={styles.itemGroup}>
-        <Text>{item.name}</Text>
-        <Text>{item.dob}</Text>
+        <View>
+          <Text>{item.id}</Text>
+          <Text>{item.name}</Text>
+          <Text>{item.dob}</Text>
+        </View>
+        <View style={styles.ideaButton}>
+          <TouchableOpacity
+          style={styles.iconButton}
+          onPress={() => navigation.navigate("Gifts", { item })}
+          >
+            <MaterialCommunityIcons name="gift-open-outline" size={30} color="black" />
+          </TouchableOpacity>
+        </View>
       </View>
     </Swipeable>
   );
@@ -58,10 +70,16 @@ const styles = StyleSheet.create({
       paddingHorizontal: 12,
     },
     itemGroup: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
       paddingVertical: 10,
       paddingHorizontal: 20,
       borderBottomWidth: 1,
       borderBottomColor: 'gray',
+    },
+    iconButton: {
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     deleteButton: {
       backgroundColor: "red",

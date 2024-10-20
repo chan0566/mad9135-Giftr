@@ -13,7 +13,7 @@ if (!global.crypto) {
   };
 }
 
-export default function AddPersonScreen() {
+export default function AddGiftScreen() {
   const [name, setName] = useState("");
   const [dob, setDob] = useState("");
   const [showPicker, setShowPicker] = useState(false);
@@ -23,8 +23,8 @@ export default function AddPersonScreen() {
   const savePerson = () => {
     if (name && dob) {
       const id = uuidv4();
-      const gifts = [];
-      addPerson(id, name, dob, gifts);
+      const ideas = [];
+      addPerson(id, name, dob);
       navigation.goBack();
     }
   };
