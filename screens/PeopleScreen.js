@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
     header: {
         fontSize: 28,
         padding: 10,
-        fontWeight: 'bold',
       },
     itemGroup: {
         paddingVertical: 10,

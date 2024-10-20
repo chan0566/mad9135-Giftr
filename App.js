@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, SafeAreaView } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import PeopleScreen from './screens/PeopleScreen';
+import AddPersonScreen from './screens/AddPersonScreen';
 
 export default function App() {
   return (
@@ -14,7 +15,8 @@ export default function App() {
         </View>
       </View>
       <View style={styles.screen}>
-        <PeopleScreen />
+        {/* <PeopleScreen /> */}
+        <AddPersonScreen />
       </View>
     </SafeAreaView>
   </SafeAreaProvider>
@@ -40,6 +42,7 @@ const styles = StyleSheet.create({
     padding: 12,
     position: 'relative',
     borderBottomWidth: 1,
+    borderColor: 'gray',
   },
   header: {
     fontSize: 20,
