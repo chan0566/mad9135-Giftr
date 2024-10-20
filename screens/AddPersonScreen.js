@@ -1,9 +1,21 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, TextInput, Button } from "react-native";
+import PeopleContext from "../PeopleContext";
+import { useNavigation } from "@react-navigation/native";
+import { useContext } from "react";
 
 export default function AddPersonScreen() {
   const [name, setName] = useState("");
   const [dob, setDob] = useState("");
+  const { addPerson } = useContext(PeopleContext);
+  const navigation = useNavigation();
+
+  const savePerson = () => {
+    if (name && dob) {
+      addPerson(name, dob);
+      navigation.goBack();
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -17,8 +29,8 @@ export default function AddPersonScreen() {
             <TextInput style={styles.itemInput} value={dob} onChangeText={setDob} />
         </View>
         <View style={styles.buttonRow}>
-            <Button title="Save" />
-            <Button title="Cancel" />
+            <Button title="Save" onPress={savePerson} />
+            <Button title="Cancel" onPress={() => navigation.goBack()} />
         </View>
     </View>
   );
