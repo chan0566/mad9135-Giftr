@@ -1,7 +1,9 @@
 import { StyleSheet, Button, FlatList, View, Text, SafeAreaView } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
 
 export default function PeopleScreen() {
+  const navigation = useNavigation();
   const people = [
     {
       id: "d825796c-4fc1-4879-ad86-048ece613581",
@@ -22,18 +24,18 @@ export default function PeopleScreen() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView>
-        <Text style={styles.header}>People List</Text>
-        <FlatList
-          data={people}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <View style={styles.itemGroup}>
-              <Text>{item.name}</Text>
-              <Text>{item.dob}</Text>
-            </View>
-          )}
-        />
+      <SafeAreaView style={styles.container}>
+      <Text style={styles.header}>People List</Text>
+          <FlatList
+            data={people}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <View style={styles.itemGroup}>
+                <Text>{item.name}</Text>
+                <Text>{item.dob}</Text>
+              </View>
+            )}
+          />
       </SafeAreaView>
     </SafeAreaProvider>
   );
@@ -43,18 +45,17 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: 'white',
-      alignItems: 'center',
-      justifyContent: 'center',
     },
     header: {
-        fontSize: 28,
-        padding: 10,
-      },
+      fontSize: 28,
+      paddingVertical: 20,
+      paddingHorizontal: 12,
+    },
     itemGroup: {
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderBottomWidth: 1,
-        borderBottomColor: 'gray',
-        },
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+      borderBottomWidth: 1,
+      borderBottomColor: 'gray',
+    },
   });
   

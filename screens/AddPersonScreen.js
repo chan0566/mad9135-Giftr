@@ -6,7 +6,7 @@ export default function AddPersonScreen() {
   const [dob, setDob] = useState("");
 
   return (
-    <View>
+    <View style={styles.container}>
         <Text style={styles.header} >Add a Person</Text>
         <View style={styles.itemGroup}>
             <Text>Person's Name</Text>
@@ -28,12 +28,11 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: 'white',
-      alignItems: 'center',
-      justifyContent: 'center',
     },
     header: {
         fontSize: 28,
-        padding: 10,
+        paddingVertical: 20,
+        paddingHorizontal: 12,
       },
     itemGroup: {
         paddingVertical: 10,
