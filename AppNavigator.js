@@ -23,15 +23,7 @@ export default function AppNavigator() {
             })} 
         />
         <Stack.Screen name="Add Person" component={AddPersonScreen} />
-        <Stack.Screen 
-            name="Gifts" 
-            component={GiftScreen} 
-            options={({ navigation }) => ({
-              headerRight: () => (
-                  <Button title="Add Gift" onPress={() => navigation.navigate("Add Gift")} />
-                ),
-            })} 
-        />
+        <Stack.Screen name="Gifts" component={GiftScreen} />
         <Stack.Screen name="Add Gift" component={AddGiftScreen} />
       </Stack.Navigator>
     </NavigationContainer>

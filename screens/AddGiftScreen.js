@@ -3,58 +3,35 @@ import { StyleSheet, View, Text, TextInput, Button } from "react-native";
 import PeopleContext from "../PeopleContext";
 import { useNavigation } from "@react-navigation/native";
 import { useContext } from "react";
-import DatePicker from "react-native-modern-datepicker";
-import { v4 as uuidv4 } from 'uuid';
-import * as Crypto from 'expo-crypto';
+import CameraComponent from "../components/CameraComponent";
 
-if (!global.crypto) {
-  global.crypto = {
-    getRandomValues: (array) => Crypto.getRandomValues(array)
-  };
-}
-
-export default function AddGiftScreen() {
-  const [name, setName] = useState("");
-  const [dob, setDob] = useState("");
-  const [showPicker, setShowPicker] = useState(false);
-  const { addPerson } = useContext(PeopleContext);
+export default function AddGiftScreen({ route }) {
+  const { item } = route.params;
+  const [giftName, setGiftName] = useState("");
+  const { AddGift } = useContext(PeopleContext);
   const navigation = useNavigation();
+  const [photo, setPhoto] = useState(null);
 
-  const savePerson = () => {
-    if (name && dob) {
-      const id = uuidv4();
-      const ideas = [];
-      addPerson(id, name, dob);
+  const saveGift = () => {
+    if (giftName) {
+      AddGift(giftName, photo);
       navigation.goBack();
     }
   };
 
   return (
     <View style={styles.container}>
-        <Text style={styles.header} >Add a Person</Text>
+        <Text style={styles.header} >Ideas for {item.name}</Text>
         <View style={styles.itemGroup}>
-            <Text>Person's Name</Text>
-            <TextInput style={styles.itemInput} value={name} onChangeText={setName} />
+            <Text>Gift Name</Text>
+            <TextInput style={styles.itemInput} value={giftName} onChangeText={setGiftName} />
         </View>
         <View style={styles.itemGroup}>
-          <View style={styles.dobRow}>
-            <Text>Date of Birth</Text>
-            <Text style={styles.selectedDate}>
-              {dob ? dob : "Select a date"}
-            </Text>
-          </View>
-          <DatePicker
-            onSelectedChange={date => setDob(date)}
-            options={{
-              backgroundColor: '#ffffff',
-              textHeaderColor: '#000',
-            }}
-            mode="calendar"
-          />
+          <CameraComponent setPhoto={setPhoto} />
         </View>
         <View style={styles.buttonRow}>
             <Button title="Cancel" onPress={() => navigation.goBack()} />
-            <Button title="Save" onPress={savePerson} />
+            <Button title="Save" onPress={saveGift} />
         </View>
     </View>
   );
@@ -84,16 +61,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         padding: 10,
-      },
-    dobRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      },
-    selectedDate: {
-        padding: 10,
-        fontSize: 16,
-        color: 'gray',
       },
   });
   

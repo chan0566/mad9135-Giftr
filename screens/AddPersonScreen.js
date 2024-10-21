@@ -4,14 +4,6 @@ import PeopleContext from "../PeopleContext";
 import { useNavigation } from "@react-navigation/native";
 import { useContext } from "react";
 import DatePicker from "react-native-modern-datepicker";
-import { v4 as uuidv4 } from 'uuid';
-import * as Crypto from 'expo-crypto';
-
-if (!global.crypto) {
-  global.crypto = {
-    getRandomValues: (array) => Crypto.getRandomValues(array)
-  };
-}
 
 export default function AddPersonScreen() {
   const [name, setName] = useState("");
@@ -22,9 +14,7 @@ export default function AddPersonScreen() {
 
   const savePerson = () => {
     if (name && dob) {
-      const id = uuidv4();
-      const gifts = [];
-      addPerson(id, name, dob, gifts);
+      addPerson( name, dob);
       navigation.goBack();
     }
   };

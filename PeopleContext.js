@@ -29,6 +29,17 @@ export const PeopleProvider = ({ children }) => {
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedPeople));
   };
 
+  const addGift = async (id, gift) => {
+    const updatedPeople = people.map((person) => {
+      if (person.id === id) {
+        return { ...person, gifts: [...person.gifts, gift] };
+      }
+      return person;
+    });
+    setPeople(updatedPeople);
+    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedPeople));
+  };
+
   const removePerson = async (id) => {
     const updatedPeople = people.filter((person) => person.id !== id);
     setPeople(updatedPeople);

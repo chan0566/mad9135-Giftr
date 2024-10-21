@@ -1,8 +1,10 @@
 import { StyleSheet, Button, FlatList, View, Text, SafeAreaView } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
 
 export default function GiftScreen({ route }) {
   const { item } = route.params;
+  const navigation = useNavigation();
 
   // const { people, removePerson } = useContext(PeopleContext);
   // const sortedPeople = [...people].sort((a, b) => new Date(a.dob) - new Date(b.dob));
@@ -20,13 +22,13 @@ export default function GiftScreen({ route }) {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-      <Text>Gift Ideas for:</Text>  
-      <Text style={styles.header}>{item.name}</Text>
+      <Text style={styles.header}>Gift ideas for {item.name}</Text>
       {/* <FlatList
         data={sortedPeople}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
       /> */}
+      <Button title="Add Gift" onPress={() => navigation.navigate("Add Gift", { item })} />
       </SafeAreaView>
     </SafeAreaProvider>
   );
