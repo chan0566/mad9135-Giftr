@@ -46,8 +46,22 @@ export const PeopleProvider = ({ children }) => {
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedPeople));
   };
 
+  const removeGift = (personId, giftName) => {
+    setPeople((prevPeople) =>
+      prevPeople.map((person) => {
+        if (person.id === personId) {
+          return {
+            ...person,
+            gifts: person.gifts.filter((gift) => gift.name !== giftName),
+          };
+        }
+        return person;
+      })
+    );
+  };
+
   return (
-    <PeopleContext.Provider value={{ people, addPerson, removePerson, addGift  }}>
+    <PeopleContext.Provider value={{ people, addPerson, removePerson, addGift, removeGift  }}>
       {children}
     </PeopleContext.Provider>
   );
