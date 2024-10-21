@@ -32,7 +32,7 @@ export const PeopleProvider = ({ children }) => {
   const addGift = async (id, gift) => {
     const updatedPeople = people.map((person) => {
       if (person.id === id) {
-        return { ...person, gifts: [...person.gifts, gift] };
+        return { ...person, gifts: [...(person.gifts || []), gift] };
       }
       return person;
     });
@@ -47,7 +47,7 @@ export const PeopleProvider = ({ children }) => {
   };
 
   return (
-    <PeopleContext.Provider value={{ people, addPerson, removePerson  }}>
+    <PeopleContext.Provider value={{ people, addPerson, removePerson, addGift  }}>
       {children}
     </PeopleContext.Provider>
   );

@@ -8,13 +8,15 @@ import CameraComponent from "../components/CameraComponent";
 export default function AddGiftScreen({ route }) {
   const { item } = route.params;
   const [giftName, setGiftName] = useState("");
-  const { AddGift } = useContext(PeopleContext);
+  const { addGift } = useContext(PeopleContext);
   const navigation = useNavigation();
   const [photo, setPhoto] = useState(null);
 
   const saveGift = () => {
     if (giftName) {
-      AddGift(giftName, photo);
+      const gift = { name: giftName, photo };
+      console.log("Adding gift", gift);
+      addGift(item.id, gift);
       navigation.goBack();
     }
   };
