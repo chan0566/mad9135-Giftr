@@ -26,7 +26,7 @@ export default function AddGiftScreen({ route }) {
             <Text>Gift Name</Text>
             <TextInput style={styles.itemInput} value={giftName} onChangeText={setGiftName} />
         </View>
-        <View style={styles.itemGroup}>
+        <View style={styles.cameraGroup}>
           <CameraComponent setPhoto={setPhoto} />
         </View>
         <View style={styles.buttonRow}>
@@ -57,10 +57,15 @@ const styles = StyleSheet.create({
         padding: 10,
         marginVertical: 10,
       },
+    cameraGroup: {
+        flex: 1,
+        padding: 20,
+      },
     buttonRow: {
         flexDirection: 'row',
         justifyContent: 'space-around',
         padding: 10,
+        marginBottom: 20,
       },
   });
   
