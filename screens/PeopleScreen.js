@@ -25,8 +25,7 @@ export default function PeopleScreen() {
     <Swipeable renderRightActions={() => renderRightActions(item.id)}>
       <View style={styles.itemGroup}>
         <View>
-          <Text>{item.id}</Text>
-          <Text>{item.name}</Text>
+          <Text style={styles.name}>{item.name}</Text>
           <Text>{item.dob}</Text>
         </View>
         <View style={styles.ideaButton}>
@@ -68,6 +67,9 @@ const styles = StyleSheet.create({
       fontSize: 28,
       paddingVertical: 20,
       paddingHorizontal: 12,
+    },
+    name: {
+      fontWeight: 'bold',
     },
     itemGroup: {
       flexDirection: 'row',

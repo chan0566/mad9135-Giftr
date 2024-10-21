@@ -1,7 +1,7 @@
-import { StyleSheet, FlatList, View, Text, SafeAreaView, Image, Button } from "react-native";
+import { StyleSheet, FlatList, View, Text, SafeAreaView, Image, Button, Modal, TouchableWithoutFeedback } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import PeopleContext from "../PeopleContext";
 
 export default function GiftScreen({ route }) {
@@ -9,14 +9,34 @@ export default function GiftScreen({ route }) {
   const navigation = useNavigation();
   const { people, removeGift } = useContext(PeopleContext);
   const person = people.find((person) => person.id === item.id);
-  const giftIdeas = person ? person.gifts : [];
+
+  if (!person) {
+    return (
+      <SafeAreaProvider>
+        <SafeAreaView style={styles.container}>
+          <Text style={styles.noDataText}>No gifts found for this person.</Text>
+          <Button title="Go Back" onPress={() => navigation.goBack()} />
+        </SafeAreaView>
+      </SafeAreaProvider>
+    );
+  }
+  
+  const giftIdeas = Array.isArray(person.gifts) ? person.gifts : [];
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const renderItem = ({ item }) => {
     return (
       <View style={styles.itemContainer}>
         <Text style={styles.itemName}>{item.name}</Text>
         {item.photo && (
-          <Image source={{ uri: item.photo }} style={styles.imagePreview} />
+          <TouchableWithoutFeedback onPress={() => {
+            setSelectedImage(item.photo);
+            setModalVisible(true);
+          }}>
+            <Image source={{ uri: item.photo }} style={styles.imagePreview} />
+          </TouchableWithoutFeedback>
         )}
         <Button
           title="Delete"
@@ -44,6 +64,21 @@ export default function GiftScreen({ route }) {
           <Text style={styles.noDataText}>No gift ideas available</Text>
         )}
         <Button title="Add Gift" onPress={() => navigation.navigate("Add Gift", { item })} />
+
+        <Modal
+          visible={modalVisible}
+          transparent={true}
+          animationType="slide"
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <TouchableWithoutFeedback onPress={() => {
+            setModalVisible(false);
+          }}>
+            <View style={styles.modalContainer}>
+              <Image source={{ uri: selectedImage }} style={styles.fullscreenImage} />
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
       </SafeAreaView>
     </SafeAreaProvider>
   );
@@ -63,6 +98,9 @@ const styles = StyleSheet.create({
     width: '48%',
     margin: '1%',
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'lightgray',
+    padding: 10,
   },
   itemName: {
     marginBottom: 5,
@@ -72,7 +110,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: undefined,
     aspectRatio: 2 / 3,
-    resizeMode: 'cover', 
+    resizeMode: 'cover',
   },
   noDataText: {
     textAlign: 'center',
@@ -83,5 +121,16 @@ const styles = StyleSheet.create({
   row: {
     flex: 1,
     justifyContent: 'space-between',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.8)',
+  },
+  fullscreenImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
   },
 });

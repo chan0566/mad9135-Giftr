@@ -28,7 +28,6 @@ export default function AddGiftScreen({ route }) {
     if (cameraRef) {
       const data = await cameraRef.takePictureAsync();
       setPhoto(data.uri); // Set the photo URI to display
-      console.log("Photo taken:", data.uri);
     }
   };
 
@@ -37,10 +36,8 @@ export default function AddGiftScreen({ route }) {
   }
 
   const saveGift = () => {
-    console.log("Current photo:", photo);
     if (giftName && photo) {
       const gift = { name: giftName, photo };
-      console.log("Adding gift", gift);
       addGift(item.id, gift);
       navigation.goBack();
     } else {
